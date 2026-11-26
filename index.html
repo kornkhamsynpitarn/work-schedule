@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Work Schedule – Syn Pitarn (SMSK) Branch</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B2A3D;--paper:#F6F2E8;--card:#fff;--rule:#E0D7C0;--dim:#ECE5D4;--slate:#6B7686;--teal:#2F6F62;--brass:#A67C3D;--wk:#F4EFE0;--me:#FFF6D6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root{--ink:#E8E4D8;--paper:#141D29;--card:#1A2533;--rule:#33445A;--dim:#1D2A3A;--slate:#9AA7B8;--teal:#6FB7A5;--brass:#D1A663;--wk:#202E40;--me:#2A3A2E}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.45 Inter,system-ui,sans-serif}
+header{padding:16px 20px;background:var(--card);border-bottom:3px solid var(--brass)}
+h1{font:600 20px Fraunces,Georgia,serif;margin:0}
+header p{margin:2px 0 0;color:var(--slate);font-size:12.5px}
+main{padding:14px 20px 40px;max-width:1400px;margin:0 auto}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+select,input,button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:7px 10px}
+button{font-weight:600;cursor:pointer}
+button.pri{background:var(--teal);border-color:var(--teal);color:#fff}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.sp{flex:1}
+.pill{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.pill span{background:var(--dim);border-radius:999px;padding:3px 10px;font-size:12px}
+.pill b{font-weight:600}
+.wrap{overflow:auto;max-height:72vh;border:1px solid var(--rule);border-radius:12px;background:var(--card)}
+table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%}
+th,td{padding:0;text-align:center;border-bottom:1px solid var(--rule);height:42px;min-width:40px}
+thead th{position:sticky;top:0;z-index:3;background:var(--card);height:46px;font-weight:400;border-bottom:2px solid var(--rule)}
+thead th b{display:block;font-size:14px}thead th span{font-size:10.5px;color:var(--slate);text-transform:uppercase}
+.nm{position:sticky;left:0;z-index:2;background:var(--card);text-align:left;padding:0 12px;min-width:150px;border-right:2px solid var(--rule)}
+thead .nm{z-index:4}
+.nm b{display:block;font-weight:600;line-height:1.2}.nm small{color:var(--slate);font-size:11px}
+.we{background:var(--wk)}thead th.we{background:var(--wk)}
+th.td{box-shadow:inset 0 -3px 0 var(--teal)}th.td b{color:var(--teal)}
+tr.me td,tr.me .nm{background:var(--me)}
+.chip{display:inline-block;min-width:30px;padding:3px 6px;border-radius:7px;font-size:11.5px;font-weight:600;line-height:1.3}
+.chip em{font-style:normal;margin-left:3px;background:rgba(0,0,0,.18);border-radius:4px;padding:0 3px;font-size:9.5px}
+.chip.ot{background:var(--dim)}
+td small{display:block;font-size:9.5px;color:var(--slate);max-width:44px;margin:1px auto 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ed td.c{cursor:pointer}.ed td.c:hover{outline:2px solid var(--brass);outline-offset:-2px}
+.leg{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:14px;font-size:12.5px;color:var(--slate)}
+.msg{padding:30px;text-align:center;color:var(--slate)}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+#ov[hidden]{display:none}
+#pop{background:var(--card);border-radius:14px;padding:18px;width:100%;max-width:360px}
+#pop h3{margin:0 0 10px;font:600 16px Fraunces,Georgia,serif}
+#pc{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+#pc button{min-width:46px;padding:7px 8px}#pc button.on{outline:3px solid var(--brass)}
+#pop label{display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:13px}
+#pn{width:100%;margin-bottom:12px}
+.act{display:flex;gap:8px;justify-content:flex-end}
+#pe{color:#B14A2C;font-size:12px;margin:8px 0 0}
+</style></head>
+<body>
+<header id="hd"><h1>Work Schedule</h1><p>Syn Pitarn (SMSK) Branch · colours follow the monthly schedule sheet</p></header>
+<main>
+  <div class="bar">
+    <button id="prev" aria-label="Previous month">‹</button>
+    <select id="mo"></select><select id="yr"><option>2026</option><option>2027</option></select>
+    <button id="next" aria-label="Next month">›</button><button id="tod">Today</button>
+    <span class="sp"></span><input id="q" type="search" placeholder="Find a name…" aria-label="Find a name">
+  </div>
+  <div class="pill" id="ev"></div>
+  <div class="pill" id="off"></div>
+  <div class="wrap" id="grid"></div>
+  <div class="leg" id="leg"></div>
+</main>
+<div id="ov" hidden><div id="pop" role="dialog" aria-modal="true">
+  <h3 id="pt"></h3><div id="pc"></div>
+  <label><input type="checkbox" id="po"> OT / works this day</label>
+  <input id="pn" placeholder="Note (e.g. cover by Joy)">
+  <div class="act"><button id="px">Cancel</button><button id="ps" class="pri">Save</button></div><p id="pe"></p>
+</div></div>
+<script>
+(function(){"use strict";
+const API="https://script.google.com/macros/s/AKfycbxHq_Yypk7q31CbWDPQpGNweg5a5tF88K2oPZ6y7h2lofaFgJIVmmv47Vcq3T1JjTbW/exec";
+const Q=new URLSearchParams(location.search),EDIT=Q.get("edit")==="1",EMBED=Q.get("embed")==="1",WANT=(Q.get("nick")||"").trim().toLowerCase();
+const MON=["January","February","March","April","May","June","July","August","September","October","November","December"],DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const COLORS={H:"#6d9eeb",PH:"#ff9900",PL:"#00ff00",AL:"#00ffff",SL:"#ff00ff",OC:"#ffff00"};
+const NAMES={H:"Holiday",PH:"Public Holiday",PL:"Personal Leave",AL:"Annual Leave",SL:"Sick Leave",OC:"Office Close"};
+const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const now=new Date();let Y=now.getFullYear()===2027?2027:2026,M=Y===now.getFullYear()?now.getMonth():0,data=null,legend={},sel=null,scrolled=false;
+const col=c=>legend[c]||COLORS[c]||"#ccc";
+function ink(hex){const h=String(hex).replace("#","");if(h.length!==6)return"#1a1a1a";const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return(r*299+g*587+b*114)/1000>150?"#1a1a1a":"#fff"}
+function who(s){const m=/^(.*?)\s*\(([^)]+)\)\s*-?\s*(\S*)/.exec(s)||[];return{full:(m[1]||s).trim(),nick:(m[2]||s).trim(),pos:(m[3]||"").replace(/\d+$/,"")}}
+const chip=c=>'<span class="chip" style="background:'+col(c)+';color:'+ink(col(c))+'">'+c+'</span>';
+
+function render(){
+  if(!data)return;
+  const isCur=now.getFullYear()===Y&&now.getMonth()===M,td=now.getDate(),f=$("q").value.trim().toLowerCase();
+  let h='<table class="'+(EDIT?"ed":"")+'"><thead><tr><th class="nm">Staff</th>'+data.days.map(d=>'<th class="'+(d.dow%6===0?"we ":"")+(isCur&&d.n===td?"td":"")+'"><b>'+d.n+'</b><span>'+DOW[d.dow]+'</span></th>').join("")+'</tr></thead><tbody>';
+  data.staff.forEach((s,si)=>{
+    const w=who(s.name);if(f&&(w.nick+" "+w.full).toLowerCase().indexOf(f)<0)return;
+    h+='<tr'+(w.nick.toLowerCase()===WANT?' class="me" id="me"':'')+'><td class="nm"><b>'+esc(w.nick)+'</b><small>'+esc(w.full)+(w.pos?' · '+esc(w.pos):'')+'</small></td>';
+    s.cells.forEach((c,i)=>{
+      let x=c.code?'<span class="chip" style="background:'+col(c.code)+';color:'+ink(col(c.code))+'">'+c.code+(c.ot?'<em>OT</em>':'')+'</span>':(c.ot?'<span class="chip ot">OT</span>':'');
+      if(c.note)x+='<small title="'+esc(c.note)+'">'+esc(c.note)+'</small>';
+      h+='<td class="c'+(data.days[i].dow%6===0?" we":"")+'" data-s="'+si+'" data-i="'+i+'">'+x+'</td>';
+    });h+='</tr>';
+  });
+  $("grid").innerHTML=h+'</tbody></table>';
+  const ev=(data.events||[]).map((e,i)=>e?'<span><b>'+DOW[data.days[i].dow]+' '+data.days[i].n+'</b> · '+esc(e)+'</span>':"").join("");
+  $("ev").innerHTML=ev;
+  const offs=isCur?data.staff.map(s=>({w:who(s.name),c:s.cells[td-1]})).filter(x=>x.c&&x.c.code):[];
+  $("off").innerHTML=offs.length?'<span><b>Today</b></span>'+offs.map(x=>'<span>'+esc(x.w.nick)+' · '+(NAMES[x.c.code]||x.c.code)+'</span>').join(""):"";
+  $("leg").innerHTML=Object.keys(NAMES).map(c=>'<span>'+chip(c)+' '+NAMES[c]+'</span>').join("")+'<span><span class="chip ot">OT</span> Works overtime / works that day</span>';
+  if(!scrolled&&$("me")){scrolled=true;$("me").scrollIntoView({block:"nearest"});}
+  if(isCur&&$("grid").querySelector("th.td"))$("grid").scrollLeft=Math.max(0,$("grid").querySelector("th.td").offsetLeft-190);
+}
+async function load(){
+  $("grid").innerHTML='<p class="msg">Loading…</p>';
+  try{
+    const r=await fetch(API+"?action=month&year="+Y+"&month="+(M+1)),j=await r.json();
+    if(j.error)throw new Error(j.error);
+    if(Y!==2026&&j.year!==Y)throw new Error("The schedule script needs the 2027 update first.");
+    data=j;legend=j.legend||{};render();
+  }catch(e){data=null;$("grid").innerHTML='<p class="msg">Couldn’t load the schedule: '+esc(e.message)+'</p>';$("ev").innerHTML=$("off").innerHTML="";}
+}
+function go(dm){M+=dm;if(M<0){M=11;Y--;}if(M>11){M=0;Y++;}if(Y<2026){Y=2026;M=0;}if(Y>2027){Y=2027;M=11;}sync();load();}
+function sync(){$("mo").value=M;$("yr").value=Y;}
+
+/* ---- editing (branch manager / assistant): click a cell ---- */
+const getKey=()=>{try{return sessionStorage.getItem("wsKey")||""}catch(e){return""}},setKey=k=>{try{sessionStorage.setItem("wsKey",k)}catch(e){}};
+function open(si,i){
+  const s=data.staff[si],c=s.cells[i];sel={si:si,i:i,code:c.code||""};
+  $("pt").textContent=who(s.name).nick+" · "+MON[M]+" "+data.days[i].n;
+  $("pc").innerHTML='<button data-c="">None</button>'+Object.keys(NAMES).map(k=>'<button data-c="'+k+'" style="background:'+col(k)+';color:'+ink(col(k))+'">'+k+'</button>').join("");
+  $("po").checked=!!c.ot;$("pn").value=c.note||"";$("pe").textContent="";mark();$("ov").hidden=false;
+}
+function mark(){$("pc").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.c===sel.code));}
+async function save(){
+  let key=getKey()||prompt("Passcode to edit the schedule:");if(!key)return;
+  const s=data.staff[sel.si],c=s.cells[sel.i];$("ps").disabled=true;$("pe").textContent="";
+  try{
+    const r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"setCell",key:key,year:Y,month:M+1,row:s.row,day:data.days[sel.i].n,code:sel.code,ot:$("po").checked,note:$("pn").value.trim()})}),j=await r.json();
+    if(j.error){if(/passcode/i.test(j.error))setKey("");throw new Error(j.error);}
+    setKey(key);c.code=sel.code;c.ot=$("po").checked;c.note=$("pn").value.trim();$("ov").hidden=true;render();
+  }catch(e){$("pe").textContent="Couldn’t save: "+e.message;}
+  $("ps").disabled=false;
+}
+/* ---- init ---- */
+$("mo").innerHTML=MON.map((m,i)=>'<option value="'+i+'">'+m+'</option>').join("");sync();
+$("mo").onchange=()=>{M=+$("mo").value;load();};$("yr").onchange=()=>{Y=+$("yr").value;load();};
+$("prev").onclick=()=>go(-1);$("next").onclick=()=>go(1);
+$("tod").onclick=()=>{Y=now.getFullYear()===2027?2027:2026;M=now.getMonth();scrolled=false;sync();load();};
+$("q").oninput=render;
+$("grid").addEventListener("click",e=>{const t=e.target.closest("td.c");if(EDIT&&t&&data)open(+t.dataset.s,+t.dataset.i);});
+$("pc").addEventListener("click",e=>{const b=e.target.closest("button");if(b){sel.code=b.dataset.c;mark();}});
+$("px").onclick=()=>{$("ov").hidden=true;};$("ps").onclick=save;
+$("ov").addEventListener("click",e=>{if(e.target===$("ov"))$("ov").hidden=true;});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("ov").hidden=true;});
+if(EMBED){$("hd").style.display="none";document.querySelector("main").style.padding="0";if(window.parent!==window)new ResizeObserver(()=>parent.postMessage({scheduleHeight:document.documentElement.scrollHeight},"*")).observe(document.body);}
+load();
+})();
+</script></body></html>
